@@ -188,6 +188,6 @@ st.markdown("""
     <hr>
     <center>
     Made with ❤️ by <strong>HIKMAT KHAN</strong> <br>
-    [LinkedIn](https://www.linkedin.com/) | [GitHub](https://github.com/) | [Streamlit Profile](https://discuss.streamlit.io/)
+    [LinkedIn](https://www.linkedin.com/in/hikmat-khan-652301256//) | [GitHub](https://github.com/hikmatkhan090/) | [Streamlit Profile](https://https://share.streamlit.io/)
     </center>
 """, unsafe_allow_html=True)
