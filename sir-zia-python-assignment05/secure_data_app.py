@@ -1,9 +1,11 @@
 import streamlit as st
 import json
 import os
+import time
 from base64 import urlsafe_b64encode
 from hashlib import pbkdf2_hmac
 from cryptography.fernet import Fernet
+from streamlit.components.v1 import html
 
 # Constants
 USER_DATA_FILE = "user_data.json"
@@ -37,12 +39,61 @@ def decrypt_data(encrypted_text, passkey):
     except Exception:
         return None
 
+# Animation Components
+def loading_animation():
+    """Shows a loading animation for cryptographic operations"""
+    with st.spinner("🔐 Securing your data..."):
+        time.sleep(1.5)
+
+def success_animation():
+    """Shows a success animation"""
+    html("""
+    <div class="success-animation">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+    </div>
+    <style>
+    .success-animation { margin: 0 auto; }
+    .checkmark { width: 50px; height: 50px; display: block; margin: 0 auto; }
+    .checkmark__circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2; stroke-miterlimit: 10; 
+        stroke: #4CAF50; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
+    .checkmark__check { stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
+    @keyframes stroke { 100% { stroke-dashoffset: 0; } }
+    </style>
+    """)
+
+def lock_animation():
+    """Shows a locking animation"""
+    html("""
+    <div class="lock-animation">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#6e48aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+    </div>
+    <style>
+    .lock-animation { 
+        animation: pulse 1.5s infinite;
+        margin: 0 auto;
+        text-align: center;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    </style>
+    """)
+
 # Streamlit App Configuration
 st.set_page_config(page_title="Secure Data App", page_icon="🔒", layout="wide")
 
 # Custom CSS for styling
 st.markdown("""
 <style>
+/* Vibrant Header */
 .vibrant-header {
     background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
     text-align: center;
@@ -50,13 +101,16 @@ st.markdown("""
     border-radius: 8px;
     margin-bottom: 25px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: fadeIn 1s ease-in-out;
 }
 .header-title {
-    color: #FFFF00 !important; /* Bright yellow */
+    color: #FFFF00 !important;
     font-size: 2.2rem;
     margin: 0;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
+
+/* Footer */
 .purple-footer {
     text-align: center;
     margin-top: 20px;
@@ -64,6 +118,7 @@ st.markdown("""
     line-height: 1.3;
     background-color: #800080;
     border-radius: 5px;
+    animation: slideUp 0.5s ease-out;
 }
 .footer-quote {
     font-style: italic;
@@ -75,19 +130,55 @@ st.markdown("""
     font-size: 12px;
     color: #E6E6FA;
 }
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Input Fields */
+.stTextInput>div>div>input, .stTextArea>div>textarea {
+    border-radius: 5px !important;
+    border: 1px solid #6e48aa !important;
+    transition: all 0.3s ease;
+}
+.stTextInput>div>div>input:focus, .stTextArea>div>textarea:focus {
+    border-color: #9d50bb !important;
+    box-shadow: 0 0 0 2px rgba(110,72,170,0.2) !important;
+}
+
+/* Buttons */
+.stButton>button {
+    border-radius: 5px;
+    border: 1px solid #6e48aa;
+    background-color: #6e48aa;
+    color: white;
+    transition: all 0.3s;
+}
+.stButton>button:hover {
+    background-color: #9d50bb;
+    border-color: #9d50bb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 </style>
 """, unsafe_allow_html=True)
 
 # Vibrant Main Header with Purple Gradient and Yellow Text
 st.markdown("""
 <div class="vibrant-header">
-    <h1 class="header-title">🔒 Secure Data Management App</h1>
+    <h1 class="header-title">🛡️ Secure Vault Pro</h1>
 </div>
 """, unsafe_allow_html=True)
 
-# Sidebar Navigation
-st.sidebar.title("Navigate")
-menu = st.sidebar.selectbox("Menu", ["Register", "Login", "Store Data", "Retrieve Data"])
+# Sidebar Navigation with improved emojis
+st.sidebar.title("🔐 Navigation")
+menu = st.sidebar.selectbox("Menu", ["👤 Register", "🔑 Login", "💾 Store Data", "🔍 Retrieve Data"])
 
 # Load user data
 user_data = load_user_data()
@@ -97,76 +188,86 @@ if "username" not in st.session_state:
     st.session_state.username = None
 
 # Register Page
-if menu == "Register":
-    st.subheader("Create a New Account 📝")
-    new_username = st.text_input("Enter a Username")
-    new_password = st.text_input("Enter a Password", type="password")
+if menu == "👤 Register":
+    st.subheader("📝 Create a New Account")
+    new_username = st.text_input("🧑‍💻 Enter a Username")
+    new_password = st.text_input("🔑 Enter a Password", type="password")
 
-    if st.button("Register"):
+    if st.button("🚀 Register"):
         if new_username in user_data:
-            st.error("Username already exists. Try another one!")
+            st.error("❌ Username already exists. Try another one!")
         else:
+            loading_animation()
             user_data[new_username] = {
                 "password": encrypt_data(new_password, new_username),
                 "data": ""
             }
             save_user_data(user_data)
-            st.success("Account created successfully! 🎉")
+            success_animation()
+            st.success("✅ Account created successfully!")
 
 # Login Page
-elif menu == "Login":
-    st.subheader("Login to Your Account 🔑")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
+elif menu == "🔑 Login":
+    st.subheader("🔐 Login to Your Account")
+    username = st.text_input("🧑‍💻 Username")
+    password = st.text_input("🔑 Password", type="password")
 
-    if st.button("Login"):
+    if st.button("🔓 Login"):
         if username in user_data:
+            loading_animation()
             decrypted_password = decrypt_data(user_data[username]["password"], username)
             if decrypted_password == password:
                 st.session_state.username = username
-                st.success(f"Welcome {username}! 🎯")
+                success_animation()
+                st.success(f"🎉 Welcome {username}!")
             else:
-                st.error("Incorrect password.")
+                st.error("❌ Incorrect password.")
         else:
-            st.error("Username not found.")
+            st.error("❌ Username not found.")
 
 # Store Data Page
-elif menu == "Store Data":
+elif menu == "💾 Store Data":
     if st.session_state.username:
-        st.subheader(f"Store Secret Data 🗂️ (User: {st.session_state.username})")
-        data = st.text_area("Enter the data to encrypt and store:")
+        st.subheader(f"🗄️ Secure Storage (User: {st.session_state.username})")
+        data = st.text_area("✏️ Enter the data to encrypt and store:")
 
-        if st.button("Encrypt & Store"):
+        if st.button("🔒 Encrypt & Store"):
+            lock_animation()
+            loading_animation()
             encrypted = encrypt_data(data, st.session_state.username)
             user_data[st.session_state.username]["data"] = encrypted
             save_user_data(user_data)
-            st.success("Data encrypted and stored successfully! 🔒")
+            success_animation()
+            st.success("✅ Data encrypted and stored securely!")
     else:
-        st.warning("Please login first!")
+        st.warning("⚠️ Please login first!")
 
 # Retrieve Data Page
-elif menu == "Retrieve Data":
+elif menu == "🔍 Retrieve Data":
     if st.session_state.username:
-        st.subheader(f"Retrieve Your Secret Data 🕵️ (User: {st.session_state.username})")
+        st.subheader(f"🔎 Data Retrieval (User: {st.session_state.username})")
 
-        if st.button("Decrypt & Show Data"):
+        if st.button("🔓 Decrypt & Show Data"):
+            lock_animation()
+            loading_animation()
             encrypted = user_data[st.session_state.username].get("data", "")
             if encrypted:
                 decrypted = decrypt_data(encrypted, st.session_state.username)
                 if decrypted:
-                    st.success("Here is your decrypted data:")
+                    success_animation()
+                    st.success("🔓 Here is your decrypted data:")
                     st.code(decrypted)
                 else:
-                    st.error("Failed to decrypt data. It may be corrupted or wrong key.")
+                    st.error("❌ Failed to decrypt data. It may be corrupted or wrong key.")
             else:
-                st.info("No data found. Please store some first.")
+                st.info("ℹ️ No data found. Please store some first.")
     else:
-        st.warning("Please login first!")
+        st.warning("⚠️ Please login first!")
 
-# Footer
+# Footer with security quote
 st.markdown("""
 <div class="purple-footer">
-    <p class="footer-quote">"Security is not a product, but a process."</p>
-    <p class="footer-author">Designed by HIKMAT KHAN</p>
+    <p class="footer-quote">"Security is a process, not a product."</p>
+    <p class="footer-author">🔒 Designed by HIKMAT KHAN</p>
 </div>
 """, unsafe_allow_html=True)
