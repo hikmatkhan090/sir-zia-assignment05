@@ -43,38 +43,45 @@ st.set_page_config(page_title="Secure Data App", page_icon="🔒", layout="wide"
 # Custom CSS for styling
 st.markdown("""
 <style>
-.cyan-header {
-    background-color: #00FFFF;  /* Cyan */
+.vibrant-header {
+    background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
     text-align: center;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.header-title {
+    color: #FFFF00 !important; /* Bright yellow */
+    font-size: 2.2rem;
+    margin: 0;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 .purple-footer {
     text-align: center;
     margin-top: 20px;
-    padding: 8px 0;
-    line-height: 1.2;
-    background-color: #800080; /* Purple */
-    border-radius: 4px;
+    padding: 10px 0;
+    line-height: 1.3;
+    background-color: #800080;
+    border-radius: 5px;
 }
 .footer-quote {
     font-style: italic;
-    font-size: 12px;
+    font-size: 13px;
     color: white;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
 }
 .footer-author {
-    font-size: 11px;
-    color: #E6E6FA; /* Light purple */
+    font-size: 12px;
+    color: #E6E6FA;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# App Header with Cyan Background
+# Vibrant Main Header with Purple Gradient and Yellow Text
 st.markdown("""
-<div class="cyan-header">
-    <h1 style='color: #000000; margin:0;'>🔒 Secure Data Management App</h1>
+<div class="vibrant-header">
+    <h1 class="header-title">🔒 Secure Data Management App</h1>
 </div>
 """, unsafe_allow_html=True)
 
@@ -156,7 +163,7 @@ elif menu == "Retrieve Data":
     else:
         st.warning("Please login first!")
 
-# Updated Footer with New Quote
+# Footer
 st.markdown("""
 <div class="purple-footer">
     <p class="footer-quote">"Security is not a product, but a process."</p>
