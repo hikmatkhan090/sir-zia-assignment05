@@ -40,23 +40,23 @@ def decrypt_data(encrypted_text, passkey):
 # Streamlit App Configuration
 st.set_page_config(page_title="Secure Data App", page_icon="🔒", layout="wide")
 
-# Custom CSS for the footer
+# Custom CSS for exact footer match
 st.markdown("""
 <style>
-.compact-footer {
+.exact-footer {
     text-align: center;
-    margin-top: 40px;
-    padding: 10px 0;
-    line-height: 1.4;
+    margin-top: 30px;
+    padding: 5px 0;
+    line-height: 1.3;
 }
-.footer-quote {
+.exact-footer-quote {
     font-style: italic;
-    font-size: 14px;
+    font-size: 13px;
     color: #333333;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
-.footer-author {
-    font-size: 12px;
+.exact-footer-author {
+    font-size: 11px;
     color: #555555;
 }
 </style>
@@ -143,10 +143,10 @@ elif menu == "Retrieve Data":
     else:
         st.warning("Please login first!")
 
-# Compact Footer (matches second reference image)
+# EXACT FOOTER MATCHING REFERENCE IMAGE
 st.markdown("""
-<div class="compact-footer">
-    <p class="footer-quote">"The only limit to our realization of tomorrow is our doubts of today."</p>
-    <p class="footer-author">Designed by HIKMAT KHAN</p>
+<div class="exact-footer">
+    <p class="exact-footer-quote">"The only limit to our realization of tomorrow is our doubts of today."</p>
+    <p class="exact-footer-author">Designed by HIKMAT KHAN</p>
 </div>
 """, unsafe_allow_html=True)
