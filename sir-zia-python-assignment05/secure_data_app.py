@@ -39,6 +39,32 @@ def decrypt_data(encrypted_text, passkey):
 
 # Streamlit App Configuration
 st.set_page_config(page_title="Secure Data App", page_icon="🔒", layout="wide")
+
+# Custom CSS for the app
+st.markdown("""
+<style>
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 30px;
+}
+.footer-quote {
+    font-style: italic;
+    color: #4B0082;  /* Indigo */
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.footer-author {
+    color: #00B7EB;  /* Cyan */
+    font-size: 13px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# App Title
 st.markdown("<h1 style='text-align: center;'>🔒 Secure Data Management App</h1>", unsafe_allow_html=True)
 
 # Sidebar Navigation
@@ -119,23 +145,11 @@ elif menu == "Retrieve Data":
     else:
         st.warning("Please login first!")
 
-# Footer with Hikmat Khan's design and quote
+# Footer with custom styling
 st.markdown("""
-<style>
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    color: grey;
-}
-</style>
-
 <div class="footer">
     <hr style="border: 0.5px solid #6c757d; margin-bottom: 10px;">
-    <p style="font-style: italic; margin-bottom: 5px;">"The only limit to our realization of tomorrow is our doubts of today."</p>
-    <p style="font-size: 0.9rem;">Designed by <strong>HIKMAT KHAN</strong></p>
+    <p class="footer-quote">"The only limit to our realization of tomorrow is our doubts of today."</p>
+    <p class="footer-author">Designed by HIKMAT KHAN</p>
 </div>
 """, unsafe_allow_html=True)
