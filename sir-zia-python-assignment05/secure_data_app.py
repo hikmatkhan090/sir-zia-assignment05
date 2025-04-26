@@ -128,6 +128,12 @@ elif choice == "📝 Register":
             save_data(stored_data)
             st.success("Account created successfully! 🎉")
 
+            # 🚀 Automatically login after register
+            st.session_state.authenticated_user = username
+            st.balloons()
+            time.sleep(2)  # optional: thoda delay for better UX
+            st.experimental_rerun()
+
 # ====== Login ======
 
 elif choice == "🔑 Login":
@@ -148,8 +154,8 @@ elif choice == "🔑 Login":
             st.session_state.authenticated_user = username
             st.session_state.failed_attempts = 0
             st.success(f"Welcome back, {username}! 🎉")
-            st.balloons()  # Animation effect on successful login
-            st.experimental_rerun()  # Redirect to dashboard page
+            st.balloons()
+            st.experimental_rerun()
 
         else:
             st.session_state.failed_attempts += 1
@@ -188,6 +194,6 @@ st.markdown("""
     <hr>
     <center>
     Made with ❤️ by <strong>HIKMAT KHAN</strong> <br>
-    [LinkedIn](https://www.linkedin.com/in/hikmat-khan-652301256//) | [GitHub](https://github.com/hikmatkhan090/) | [Streamlit Profile](https://https://share.streamlit.io/)
+    [LinkedIn](https://www.linkedin.com/in/hikmat-khan-652301256//) | [GitHub](https://github.com/hikmatkhan090/) | [Streamlit Profile](https://share.streamlit.io/)
     </center>
 """, unsafe_allow_html=True)
