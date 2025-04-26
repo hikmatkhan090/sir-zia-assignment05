@@ -43,21 +43,23 @@ st.set_page_config(page_title="Secure Data App", page_icon="🔒", layout="wide"
 # Custom CSS for exact footer match
 st.markdown("""
 <style>
-.exact-footer {
+.purple-footer {
     text-align: center;
-    margin-top: 30px;
-    padding: 5px 0;
-    line-height: 1.3;
+    margin-top: 20px;
+    padding: 8px 0;
+    line-height: 1.2;
+    background-color: #800080; /* Purple background */
+    border-radius: 4px;
 }
-.exact-footer-quote {
+.footer-quote {
     font-style: italic;
-    font-size: 13px;
-    color: #333333;
+    font-size: 12px;
+    color: white;
     margin-bottom: 2px;
 }
-.exact-footer-author {
+.footer-author {
     font-size: 11px;
-    color: #555555;
+    color: #E6E6FA; /* Light purple text */
 }
 </style>
 """, unsafe_allow_html=True)
@@ -143,10 +145,10 @@ elif menu == "Retrieve Data":
     else:
         st.warning("Please login first!")
 
-# EXACT FOOTER MATCHING REFERENCE IMAGE
+# PURPLE COMPACT FOOTER (EXACT MATCH)
 st.markdown("""
-<div class="exact-footer">
-    <p class="exact-footer-quote">"The only limit to our realization of tomorrow is our doubts of today."</p>
-    <p class="exact-footer-author">Designed by HIKMAT KHAN</p>
+<div class="purple-footer">
+    <p class="footer-quote">"The only limit to our realization of tomorrow is our doubts of today."</p>
+    <p class="footer-author">Designed by HIKMAT KHAN</p>
 </div>
 """, unsafe_allow_html=True)
