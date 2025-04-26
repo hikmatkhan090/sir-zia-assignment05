@@ -40,15 +40,22 @@ def decrypt_data(encrypted_text, passkey):
 # Streamlit App Configuration
 st.set_page_config(page_title="Secure Data App", page_icon="🔒", layout="wide")
 
-# Custom CSS for exact footer match
+# Custom CSS for styling
 st.markdown("""
 <style>
+.cyan-header {
+    background-color: #00FFFF;  /* Cyan */
+    text-align: center;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
 .purple-footer {
     text-align: center;
     margin-top: 20px;
     padding: 8px 0;
     line-height: 1.2;
-    background-color: #800080; /* Purple background */
+    background-color: #800080; /* Purple */
     border-radius: 4px;
 }
 .footer-quote {
@@ -59,13 +66,17 @@ st.markdown("""
 }
 .footer-author {
     font-size: 11px;
-    color: #E6E6FA; /* Light purple text */
+    color: #E6E6FA; /* Light purple */
 }
 </style>
 """, unsafe_allow_html=True)
 
-# App Title
-st.markdown("<h1 style='text-align: center;'>🔒 Secure Data Management App</h1>", unsafe_allow_html=True)
+# App Header with Cyan Background
+st.markdown("""
+<div class="cyan-header">
+    <h1 style='color: #000000; margin:0;'>🔒 Secure Data Management App</h1>
+</div>
+""", unsafe_allow_html=True)
 
 # Sidebar Navigation
 st.sidebar.title("Navigate")
@@ -145,10 +156,10 @@ elif menu == "Retrieve Data":
     else:
         st.warning("Please login first!")
 
-# PURPLE COMPACT FOOTER (EXACT MATCH)
+# Updated Footer with New Quote
 st.markdown("""
 <div class="purple-footer">
-    <p class="footer-quote">"The only limit to our realization of tomorrow is our doubts of today."</p>
+    <p class="footer-quote">"Security is not a product, but a process."</p>
     <p class="footer-author">Designed by HIKMAT KHAN</p>
 </div>
 """, unsafe_allow_html=True)
