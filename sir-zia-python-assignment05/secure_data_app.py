@@ -63,6 +63,9 @@ if "failed_attempts" not in st.session_state:
 if "lockout_time" not in st.session_state:
     st.session_state.lockout_time = 0
 
+if "registered_success" not in st.session_state:
+    st.session_state.registered_success = False
+
 # ====== App UI Design ======
 
 st.set_page_config(page_title="SecureVault 🔐", page_icon="🔐", layout="centered")
@@ -94,6 +97,7 @@ show_lottie_animation("https://assets7.lottiefiles.com/packages/lf20_tlthojcp.js
 menu = ["🏠 Home", "🔑 Login", "📝 Register", "💾 Store Data", "📂 Retrieve Data"]
 choice = st.sidebar.selectbox("Navigate", menu)
 
+# ====== Home ======
 if choice == "🏠 Home":
     st.header("Welcome to SecureVault! 🚀")
     st.write("""
@@ -103,7 +107,6 @@ if choice == "🏠 Home":
     st.success("Get started by registering or logging in from the sidebar ➡️")
 
 # ====== Register ======
-
 elif choice == "📝 Register":
     st.header("Create a New Account 🧑‍💻")
 
@@ -126,18 +129,18 @@ elif choice == "📝 Register":
         else:
             stored_data[username] = {"password": hash_password(password), "data": []}
             save_data(stored_data)
-            st.success("Account created successfully! 🎉")
-
-            # 🚀 Automatically login after register
-            st.session_state.authenticated_user = username
-            st.balloons()
-            time.sleep(2)  # optional: thoda delay for better UX
-            st.experimental_rerun()
+            st.session_state.registered_success = True
+            st.success("Account created successfully! 🎉 Redirecting to Login page...")
+            time.sleep(2)
+            st.rerun()
 
 # ====== Login ======
-
 elif choice == "🔑 Login":
     st.header("Login to Your Vault 🔓")
+
+    if st.session_state.registered_success:
+        st.success("Account created successfully! Now login 🔑")
+        st.session_state.registered_success = False
 
     if time.time() < st.session_state.lockout_time:
         remaining_time = int(st.session_state.lockout_time - time.time())
@@ -155,7 +158,8 @@ elif choice == "🔑 Login":
             st.session_state.failed_attempts = 0
             st.success(f"Welcome back, {username}! 🎉")
             st.balloons()
-            st.experimental_rerun()
+            time.sleep(1)
+            st.rerun()
 
         else:
             st.session_state.failed_attempts += 1
@@ -167,7 +171,7 @@ elif choice == "🔑 Login":
                 st.error("🚫 Too many failed attempts. You are locked out temporarily!")
                 st.stop()
 
-# ====== After Login – Dashboard ======
+# ====== After Login – Store Data ======
 elif choice == "💾 Store Data":
     if not st.session_state.authenticated_user:
         st.warning("⚠️ Please login first to store your data.")
@@ -194,6 +198,6 @@ st.markdown("""
     <hr>
     <center>
     Made with ❤️ by <strong>HIKMAT KHAN</strong> <br>
-    [LinkedIn](https://www.linkedin.com/in/hikmat-khan-652301256//) | [GitHub](https://github.com/hikmatkhan090/) | [Streamlit Profile](https://share.streamlit.io/)
+    [LinkedIn](https://www.linkedin.com/in/hikmat-khan-652301256//) | [GitHub](https://github.com/hikmatkhan090/) | [Streamlit Profile](https://https://share.streamlit.io/)
     </center>
 """, unsafe_allow_html=True)
