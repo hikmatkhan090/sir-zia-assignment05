@@ -37,15 +37,18 @@ def decrypt_data(encrypted_text, passkey):
     except Exception:
         return None
 
-# Streamlit App
+# Streamlit App Configuration
 st.set_page_config(page_title="Secure Data App", page_icon="🔒", layout="wide")
 st.markdown("<h1 style='text-align: center;'>🔒 Secure Data Management App</h1>", unsafe_allow_html=True)
-st.sidebar.title("Navigate")
 
+# Sidebar Navigation
+st.sidebar.title("Navigate")
 menu = st.sidebar.selectbox("Menu", ["Register", "Login", "Store Data", "Retrieve Data"])
 
+# Load user data
 user_data = load_user_data()
 
+# Initialize session state
 if "username" not in st.session_state:
     st.session_state.username = None
 
@@ -116,14 +119,23 @@ elif menu == "Retrieve Data":
     else:
         st.warning("Please login first!")
 
-
-# Footer
+# Footer with Hikmat Khan's design and quote
 st.markdown("""
-<hr style="border: 0.5px solid #6c757d;">
-<div style="text-align: center; color: grey; font-size: 14px;">
-    Made with ❤️ by <strong>Your Name</strong> | Follow me on 
-    <a href="https://github.com/yourprofile" target="_blank">GitHub</a> 🚀 |
-    <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a> 💼
+<style>
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    color: grey;
+}
+</style>
+
+<div class="footer">
+    <hr style="border: 0.5px solid #6c757d; margin-bottom: 10px;">
+    <p style="font-style: italic; margin-bottom: 5px;">"The only limit to our realization of tomorrow is our doubts of today."</p>
+    <p style="font-size: 0.9rem;">Designed by <strong>HIKMAT KHAN</strong></p>
 </div>
 """, unsafe_allow_html=True)
-
