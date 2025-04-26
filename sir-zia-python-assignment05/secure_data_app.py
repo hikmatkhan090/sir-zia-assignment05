@@ -115,3 +115,15 @@ elif menu == "Retrieve Data":
                 st.info("No data found. Please store some first.")
     else:
         st.warning("Please login first!")
+
+
+# Footer
+st.markdown("""
+<hr style="border: 0.5px solid #6c757d;">
+<div style="text-align: center; color: grey; font-size: 14px;">
+    Made with ❤️ by <strong>Your Name</strong> | Follow me on 
+    <a href="https://github.com/yourprofile" target="_blank">GitHub</a> 🚀 |
+    <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a> 💼
+</div>
+""", unsafe_allow_html=True)
+
