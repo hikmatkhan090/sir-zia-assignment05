@@ -44,22 +44,27 @@ st.set_page_config(page_title="Secure Data App", page_icon="🔒", layout="wide"
 st.markdown("""
 <style>
 .footer {
-    position: relative;
+    position: fixed;
+    left: 0;
     bottom: 0;
     width: 100%;
+    background-color: #00FFFF;  /* Bright cyan */
     text-align: center;
-    padding: 10px 0;
+    padding: 15px 0;
     margin-top: 30px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
 }
 .footer-quote {
     font-style: italic;
-    color: #4B0082;  /* Indigo */
+    color: #000000;  /* Black for contrast */
     margin-bottom: 5px;
     font-size: 14px;
+    font-weight: 500;
 }
 .footer-author {
-    color: #00B7EB;  /* Cyan */
+    color: #333333;  /* Dark gray */
     font-size: 13px;
+    font-weight: 600;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -145,10 +150,9 @@ elif menu == "Retrieve Data":
     else:
         st.warning("Please login first!")
 
-# Footer with custom styling
+# Footer with cyan background
 st.markdown("""
 <div class="footer">
-    <hr style="border: 0.5px solid #6c757d; margin-bottom: 10px;">
     <p class="footer-quote">"The only limit to our realization of tomorrow is our doubts of today."</p>
     <p class="footer-author">Designed by HIKMAT KHAN</p>
 </div>
