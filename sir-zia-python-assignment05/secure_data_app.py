@@ -41,12 +41,10 @@ def decrypt_data(encrypted_text, passkey):
 
 # Animation Components
 def loading_animation():
-    """Shows a loading animation for cryptographic operations"""
     with st.spinner("🔐 Securing your data..."):
         time.sleep(1.5)
 
 def success_animation():
-    """Shows a success animation"""
     html("""
     <div class="success-animation">
         <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -65,7 +63,6 @@ def success_animation():
     """)
 
 def lock_animation():
-    """Shows a locking animation"""
     html("""
     <div class="lock-animation">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#6e48aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -88,104 +85,55 @@ def lock_animation():
     """)
 
 # Streamlit App Configuration
-st.set_page_config(page_title="Secure Data App", page_icon="🔒", layout="wide")
+st.set_page_config(page_title="Secure Vault Pro 🔐", page_icon="🔒", layout="wide")
 
-# Custom CSS for styling
-st.markdown("""
+# Custom Styling
+st.markdown(""" 
 <style>
-/* Vibrant Header */
-.vibrant-header {
-    background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
-    text-align: center;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    animation: fadeIn 1s ease-in-out;
-}
-.header-title {
-    color: #FFFF00 !important;
-    font-size: 2.2rem;
-    margin: 0;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-}
-
-/* Footer */
-.purple-footer {
-    text-align: center;
-    margin-top: 20px;
-    padding: 10px 0;
-    line-height: 1.3;
-    background-color: #800080;
-    border-radius: 5px;
-    animation: slideUp 0.5s ease-out;
-}
-.footer-quote {
-    font-style: italic;
-    font-size: 13px;
-    color: white;
-    margin-bottom: 3px;
-}
-.footer-author {
-    font-size: 12px;
-    color: #E6E6FA;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Input Fields */
-.stTextInput>div>div>input, .stTextArea>div>textarea {
-    border-radius: 5px !important;
-    border: 1px solid #6e48aa !important;
-    transition: all 0.3s ease;
-}
-.stTextInput>div>div>input:focus, .stTextArea>div>textarea:focus {
-    border-color: #9d50bb !important;
-    box-shadow: 0 0 0 2px rgba(110,72,170,0.2) !important;
-}
-
-/* Buttons */
-.stButton>button {
-    border-radius: 5px;
-    border: 1px solid #6e48aa;
-    background-color: #6e48aa;
-    color: white;
-    transition: all 0.3s;
-}
-.stButton>button:hover {
-    background-color: #9d50bb;
-    border-color: #9d50bb;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
+/* Styling Same as your Advanced Design */
+.vibrant-header { background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%); text-align: center; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
+.header-title { color: #FFFF00 !important; font-size: 2.2rem; margin: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.3);}
+.purple-footer { text-align: center; margin-top: 20px; padding: 10px 0; line-height: 1.3; background-color: #800080; border-radius: 5px; animation: slideUp 0.5s ease-out;}
+.footer-quote { font-style: italic; font-size: 13px; color: white; margin-bottom: 3px;}
+.footer-author { font-size: 12px; color: #E6E6FA;}
+.stTextInput>div>div>input, .stTextArea>div>textarea { border-radius: 5px !important; border: 1px solid #6e48aa !important; transition: all 0.3s ease;}
+.stButton>button { border-radius: 5px; border: 1px solid #6e48aa; background-color: #6e48aa; color: white; transition: all 0.3s;}
+.stButton>button:hover { background-color: #9d50bb; border-color: #9d50bb; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1);}
 </style>
 """, unsafe_allow_html=True)
 
-# Vibrant Main Header with Purple Gradient and Yellow Text
+# Vibrant Header
 st.markdown("""
 <div class="vibrant-header">
     <h1 class="header-title">🛡️ Secure Vault Pro</h1>
 </div>
 """, unsafe_allow_html=True)
 
-# Sidebar Navigation with improved emojis
+# Sidebar Menu
 st.sidebar.title("🔐 Navigation")
 menu = st.sidebar.selectbox("Menu", ["👤 Register", "🔑 Login", "💾 Store Data", "🔍 Retrieve Data"])
-
-# Load user data
-user_data = load_user_data()
 
 # Initialize session state
 if "username" not in st.session_state:
     st.session_state.username = None
+if "show_welcome" not in st.session_state:
+    st.session_state.show_welcome = False
+
+user_data = load_user_data()
+
+# Welcome Page if login/register success
+if st.session_state.show_welcome:
+    st.balloons()
+    st.markdown("""
+    <div style="text-align:center; padding:30px;">
+        <h1 style="color:#6e48aa;">🎉 Welcome to Secure Vault Pro 🎉</h1>
+        <p style="font-size:18px; color:#4CAF50;">Your digital secrets are now protected!</p>
+        <p style="font-size:16px; color:#333;">Ready to manage your encrypted vault securely.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    if st.button("🚀 Continue to Dashboard"):
+        st.session_state.show_welcome = False
+    st.stop()
 
 # Register Page
 if menu == "👤 Register":
@@ -198,13 +146,12 @@ if menu == "👤 Register":
             st.error("❌ Username already exists. Try another one!")
         else:
             loading_animation()
-            user_data[new_username] = {
-                "password": encrypt_data(new_password, new_username),
-                "data": ""
-            }
+            user_data[new_username] = {"password": encrypt_data(new_password, new_username), "data": ""}
             save_user_data(user_data)
             success_animation()
             st.success("✅ Account created successfully!")
+            st.session_state.username = new_username
+            st.session_state.show_welcome = True
 
 # Login Page
 elif menu == "🔑 Login":
@@ -220,6 +167,7 @@ elif menu == "🔑 Login":
                 st.session_state.username = username
                 success_animation()
                 st.success(f"🎉 Welcome {username}!")
+                st.session_state.show_welcome = True
             else:
                 st.error("❌ Incorrect password.")
         else:
@@ -229,8 +177,7 @@ elif menu == "🔑 Login":
 elif menu == "💾 Store Data":
     if st.session_state.username:
         st.subheader(f"🗄️ Secure Storage (User: {st.session_state.username})")
-        data = st.text_area("✏️ Enter the data to encrypt and store:")
-
+        data = st.text_area("✏️ Enter data to encrypt and store:")
         if st.button("🔒 Encrypt & Store"):
             lock_animation()
             loading_animation()
@@ -238,7 +185,7 @@ elif menu == "💾 Store Data":
             user_data[st.session_state.username]["data"] = encrypted
             save_user_data(user_data)
             success_animation()
-            st.success("✅ Data encrypted and stored securely!")
+            st.success("✅ Data encrypted and stored successfully!")
     else:
         st.warning("⚠️ Please login first!")
 
@@ -246,7 +193,6 @@ elif menu == "💾 Store Data":
 elif menu == "🔍 Retrieve Data":
     if st.session_state.username:
         st.subheader(f"🔎 Data Retrieval (User: {st.session_state.username})")
-
         if st.button("🔓 Decrypt & Show Data"):
             lock_animation()
             loading_animation()
@@ -258,13 +204,13 @@ elif menu == "🔍 Retrieve Data":
                     st.success("🔓 Here is your decrypted data:")
                     st.code(decrypted)
                 else:
-                    st.error("❌ Failed to decrypt data. It may be corrupted or wrong key.")
+                    st.error("❌ Failed to decrypt. Wrong key or data issue.")
             else:
-                st.info("ℹ️ No data found. Please store some first.")
+                st.info("ℹ️ No stored data found.")
     else:
         st.warning("⚠️ Please login first!")
 
-# Footer with security quote
+# Footer
 st.markdown("""
 <div class="purple-footer">
     <p class="footer-quote">"Security is a process, not a product."</p>
