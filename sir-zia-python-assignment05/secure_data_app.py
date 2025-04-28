@@ -218,7 +218,8 @@ else:
                 st.session_state.authenticated = True
                 success_animation()
                 time.sleep(1.5)
-                st.experimental_rerun()
+                st.rerun()
+
 
     elif menu == "🔑 Login":
         st.subheader("🔐 Login to Your Account")
