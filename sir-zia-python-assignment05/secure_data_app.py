@@ -235,7 +235,8 @@ else:
                     st.session_state.authenticated = True
                     success_animation()
                     time.sleep(1.5)
-                    st.experimental_rerun()
+                    st.rerun()
+
                 else:
                     st.error("❌ Incorrect password.")
             else:
